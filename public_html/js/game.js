@@ -95,7 +95,7 @@ Game.prototype.update=function(){
     }
 };
 Game.prototype.render=function(){
-    var _ctx=this.ctx;
+    var _ctx=this.ctx;//
     this.players.forEach(function(player){
         player.render(_ctx);
     });
