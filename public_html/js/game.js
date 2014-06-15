@@ -127,7 +127,7 @@ Game.prototype.switchGameState=function(newState){
 Game.prototype.levelUp=function(){
     this.players.forEach(function(player){
         player.weapons.forEach(function(weapon){
-            weapon.dy=10;
+            //weapon.dy=10;
         });
     });
     this.switchGameState(ENUM.GAME_STATE.PLAY);

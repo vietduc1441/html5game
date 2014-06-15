@@ -63,15 +63,14 @@ Gunner.prototype.shoot=function shootAPlayer(player){
         countHit+=this.shootWeapon(weapon);
     },this);
     //remove from player
-    player.removeHitWeapons();
+    player.removeDiedWeapons();
     return countHit;
 }
-Gunner.prototype.getDistance=function distanceTo(weapon){
-    return Math.sqrt((this.x-weapon.x)*(this.x-weapon.x)+(this.y-weapon.y)*(this.y-weapon.y));
-}
+
+
 Gunner.prototype.shootWeapon=function(weapon){
     if (weapon.shape===ENUM.SHAPE_PLATE.ROUND){
-        var distance=this.getDistance(weapon);
+        var distance=Util.calDistance(this.x,this.y,weapon.x,weapon.y);
         if(distance<this.sightSize){
             weapon.hit();
             return 1;

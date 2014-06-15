@@ -31,10 +31,10 @@ Player.prototype.render= function(ctx){
         weapon.render(ctx);        
     })
 }
-Player.prototype.removeHitWeapons=function(){
+Player.prototype.removeDiedWeapons=function(){
     var weapons=this.weapons;    
     for (var i=weapons.length-1; i>=0; i--){
         var weapon=weapons[i];
-        if (weapon.isHit) weapons.splice(i,1);
+        if (weapon.isDied) weapons.splice(i,1);
     }
 }

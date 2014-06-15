@@ -32,13 +32,12 @@ describe("Gunner", function(){
        gunner.shoot(player);
        expect(gunner.shootWeapon).toHaveBeenCalled();
    })
-   it("cal distance to weapon",function(){
-       gunner.update({mouseX:400,mouseY:500});
-       gunner.shoot(player);
-       expect(gunner.getDistance(player.weapons[0])).toEqual(500);
-   })
    it("check collision with player",function(){
        gunner.update({mouseX:120,mouseY:120});
+       gunner.shoot(player);
+       gunner.shoot(player);
+       gunner.shoot(player);
+       gunner.shoot(player);
        var hitTarget=gunner.shoot(player);
        expect(hitTarget).toEqual(1);
        expect(player.weapons.length).toEqual(1);
