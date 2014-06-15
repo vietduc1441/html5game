@@ -132,10 +132,18 @@ Game.prototype.levelUp=function(){
     });
     this.switchGameState(ENUM.GAME_STATE.PLAY);
 }
+Game.prototype.drawTitle=function(){
+    var ctx=this.ctx;
+    ctx.save();
+    ctx.font="20px Georgia";
+    ctx.fillStyle="white";
+    ctx.fillText("Press space to start game!",this.background.height/2,this.background.width/2);
+    ctx.restore();
+}
 Game.prototype.initGame=function(){
     this.drawBackground();
-    this.update();
     this.render();
+    this.drawTitle();
     this.checkKeys();
 };
 Game.prototype.checkKeys=function(){
