@@ -47,7 +47,6 @@ Gunner.prototype.update=function(evtInfo){
     if (this.fire){
         if (this.numOfFiredBullets<this.bullets.length){
             this.bullets[this.numOfFiredBullets].update(this.gunX,this.gunY,this.angle);
-            this.bullets[this.numOfFiredBullets].isFired=true;
             this.numOfFiredBullets+=1;
         }
     }
@@ -70,10 +69,15 @@ Gunner.prototype.shoot=function shootAPlayer(player){
 
 Gunner.prototype.shootWeapon=function(weapon){
     if (weapon.shape===ENUM.SHAPE_PLATE.ROUND){
-        var distance=Util.calDistance(this.x,this.y,weapon.x,weapon.y);
-        if(distance<this.sightSize){
-            weapon.hit();
-            return 1;
+        for(var i=0;i<this.numOfFiredBullets;i++){
+            var bullet=this.bullets[i];
+            if (bullet.isExploded) return 0;
+            var distance=Util.calDistance(bullet.x,bullet.y,weapon.x,weapon.y);
+            if(distance<this.sightSize){
+                weapon.hit();
+                bullet.isExploded=true;
+                return 1;
+            }
         }
     }
     return 0;

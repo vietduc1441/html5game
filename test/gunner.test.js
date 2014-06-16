@@ -4,9 +4,10 @@ describe("Gunner", function(){
     beforeEach(function(){
        gunner= new Gunner(100,100,100,50);
        gunner.addBullets(ENUM.BULLET.IRON_1,4);
+       
        player= new Player("test");
-       var plate1=WeaponFactory.makePlate(ENUM.SHAPE_PLATE.ROUND,1);
-       var plate2=WeaponFactory.makePlate(ENUM.SHAPE_PLATE.ROUND,1);
+       var plate1=WeaponFactory.makePlate(ENUM.SHAPE_PLATE.ROUND,30);
+       var plate2=WeaponFactory.makePlate(ENUM.SHAPE_PLATE.ROUND,30);
        plate1.setPosition(100,100);
        plate2.setPosition(150,150);
        player.weapons.push(plate1);
@@ -34,13 +35,18 @@ describe("Gunner", function(){
    })
    it("check collision with player",function(){
        gunner.update({mouseX:120,mouseY:120});
-       gunner.shoot(player);
-       gunner.shoot(player);
-       gunner.shoot(player);
-       gunner.shoot(player);
+       gunner.bullets[0].isFired=true;
+       gunner.bullets[0].x=100;
+       gunner.bullets[0].y=120;
+       dump(Util.calDistance(gunner.bullets[0].x,gunner.bullets[0].y,
+                            player.weapons[0].x,player.weapons[0].y));
        var hitTarget=gunner.shoot(player);
-       expect(hitTarget).toEqual(1);
-       expect(player.weapons.length).toEqual(1);
+       dump(hitTarget);
+       expect(player.weapons[0].blood).toEqual(95);
+       expect(player.weapons[0].isHit).toEqual(true);
+       
+       //expect(hitTarget).toEqual(1);
+       //expect(player.weapons.length).toEqual(1);
    });
    it("can calculate angle between 2 points",function(){
        var angle=gunner.calAngleToTarget(0,0,100,-100);

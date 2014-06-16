@@ -9,7 +9,8 @@ Plate= function(shape,size){
     this.state=0;
     this.speed=0;
     this.fillStyle= '#0000FF';
-    this.strokeStyle='#0000FF';
+    this.strokeBodyStyle='#0000FF';
+    this.strokeHitedBodyStyle='#DF0101';
     this.strokeGunStyle="white";
     this.edgeWidth=size/2;
     this.blood=100;
@@ -23,7 +24,7 @@ Plate.prototype.setPosition=function(x,y){
 };
 Plate.prototype.hit=function(){
     this.isHit=true;
-    this.blood-=20;
+    this.blood-=5;
     if(this.blood<=0){
         this.isDied=true;
     }
@@ -31,17 +32,18 @@ Plate.prototype.hit=function(){
 Plate.prototype.update=function(){
     this.x+=this.dx;
     this.y+=this.dy;
+    this.isHit=this.isHit&&!this.isHit;
 };
 Plate.prototype.render=function(ctx){
     if (this.isHit) {
-        this.renderDestroyedPlate(ctx);
+        this.renderHitedPlate(ctx);
     }
     else{
         this.renderBody(ctx);
         this.renderGun(ctx);
     }
 };
-Plate.prototype.renderDestroyedPlate=function(ctx){
+Plate.prototype.renderHitedPlate=function(ctx){
     this.renderBody(ctx);
     this.renderGun(ctx);
 }
@@ -71,7 +73,7 @@ Plate.prototype.renderBody=function(ctx){
             break;
         }
         ctx.lineWidth = this.edgeWidth;
-        ctx.strokeStyle = this.strokeStyle;
+        ctx.strokeStyle = this.isHit? this.strokeHitedBodyStyle: this.strokeBodyStyle;
         ctx.stroke();
         ctx.closePath();
     ctx.restore();
