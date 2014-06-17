@@ -35,15 +35,16 @@ describe("Gunner", function(){
    })
    it("check collision with player",function(){
        gunner.update({mouseX:120,mouseY:120});
-       gunner.bullets[0].isFired=true;
-       gunner.bullets[0].x=100;
-       gunner.bullets[0].y=120;
-       dump(Util.calDistance(gunner.bullets[0].x,gunner.bullets[0].y,
-                            player.weapons[0].x,player.weapons[0].y));
-       var hitTarget=gunner.shoot(player);
-       dump(hitTarget);
-       expect(player.weapons[0].blood).toEqual(95);
-       expect(player.weapons[0].isHit).toEqual(true);
+       var bullet=gunner.bullets[0];
+       bullet.update(100,110,-Math.PI/2);//init
+       bullet.update();//increate x
+       var absPosBullet=bullet.calAbsPosition();
+       var weapon=player.weapons[0];
+       dump(Util.calDistance(absPosBullet.x,absPosBullet.y,weapon.x,weapon.y));
+       
+       var hitTarget=gunner.shootWeapon(weapon);
+       expect(weapon.blood).toEqual(95);
+       expect(weapon.isHit).toEqual(true);
        
        //expect(hitTarget).toEqual(1);
        //expect(player.weapons.length).toEqual(1);

@@ -24,7 +24,12 @@ Bullet.prototype.update=function(x ,y, angle){
     }
 }
 Bullet.prototype.calAbsPosition=function(){
-    
+    var result={
+        x:this.initX+this.x*Math.cos(this.angle),
+        y:this.initY+this.x*Math.sin(this.angle),
+        
+    }
+    return result;
 }
 Bullet.prototype.render=function(ctx){
     if (this.isFired&&!this.isExploded){

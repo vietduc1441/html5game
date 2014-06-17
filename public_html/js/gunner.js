@@ -71,8 +71,10 @@ Gunner.prototype.shootWeapon=function(weapon){
     if (weapon.shape===ENUM.SHAPE_PLATE.ROUND){
         for(var i=0;i<this.numOfFiredBullets;i++){
             var bullet=this.bullets[i];
-            if (bullet.isExploded) return 0;
-            var distance=Util.calDistance(bullet.x,bullet.y,weapon.x,weapon.y);
+//            if (bullet.isExploded) return 0;
+            var absPosBullet=bullet.calAbsPosition();
+//            if (absPosBullet.x<0) return 0;
+            var distance=Util.calDistance(absPosBullet.x,absPosBullet.y,weapon.x,weapon.y);
             if(distance<this.sightSize){
                 weapon.hit();
                 bullet.isExploded=true;
