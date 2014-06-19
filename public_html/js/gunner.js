@@ -68,21 +68,22 @@ Gunner.prototype.shoot=function shootAPlayer(player){
 
 
 Gunner.prototype.shootWeapon=function(weapon){
+    var totalHit=0;
     if (weapon.shape===ENUM.SHAPE_PLATE.ROUND){
         for(var i=0;i<this.numOfFiredBullets;i++){
             var bullet=this.bullets[i];
-//            if (bullet.isExploded) return 0;
+            if (bullet.isExploded) continue;
             var absPosBullet=bullet.calAbsPosition();
-//            if (absPosBullet.x<0) return 0;
+            if (absPosBullet.x<0) continue;
             var distance=Util.calDistance(absPosBullet.x,absPosBullet.y,weapon.x,weapon.y);
             if(distance<this.sightSize){
                 weapon.hit();
                 bullet.isExploded=true;
-                return 1;
+                totalHit++;
             }
         }
     }
-    return 0;
+    return totalHit;
 }
 Gunner.prototype.renderSight=function(ctx){
     ctx.save();

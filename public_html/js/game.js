@@ -12,8 +12,15 @@ Game= function(){
         };
     this.mouseX=this.background.width/2;
     this.mouseY=this.background.height/2;
+    this.laserSound=null
 };
-
+Game.prototype.loadSound=function(){
+    var laserSound;
+    laserSound = document.createElement("audio");
+    document.body.appendChild(laserSound);
+    laserSound.setAttribute("src", "sound/laser.mp3");
+    this.laserSound=laserSound;
+}
 Game.prototype.addPlayer= function(name){
     var newPlayer= new Player(name);
     this.players.push(newPlayer);
@@ -71,6 +78,7 @@ Game.prototype.updateMousePosition=function(evt){
     if (this.mouseX>this.background.width) this.mouseX=this.background.width;
 };
 Game.prototype.start= function(){
+    this.loadSound();
     this.getContext();
     this.registerKey();
     this.registerMouse();
@@ -85,10 +93,13 @@ Game.prototype.update=function(){
         player.update();
     });
     this.gunners.forEach(function(gunner){
-        gunner.update({mouseX:this.mouseX,mouseY:this.mouseY,
+        var evtInf={mouseX:this.mouseX,mouseY:this.mouseY,
                         mouseDown:this.isMouseDown||this.keyPressList['13']
                         ,leftKey:this.keyPressList['37']||this.keyPressList['65']
-                        ,rightKey:this.keyPressList['39']||this.keyPressList['68']});
+                        ,rightKey:this.keyPressList['39']||this.keyPressList['68']};
+        gunner.update(evtInf);
+        if (evtInf.mouseDown) this.laserSound.play();
+
     },this);
     if (this.currentGameState===ENUM.GAME_STATE.PLAY){
         this.checkCollision();

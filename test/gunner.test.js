@@ -40,9 +40,12 @@ describe("Gunner", function(){
        bullet.update();//increate x
        var absPosBullet=bullet.calAbsPosition();
        var weapon=player.weapons[0];
+       dump(bullet);
+       dump(weapon);
        dump(Util.calDistance(absPosBullet.x,absPosBullet.y,weapon.x,weapon.y));
-       
+       dump(gunner.sightSize);
        var hitTarget=gunner.shootWeapon(weapon);
+       dump(weapon)
        expect(weapon.blood).toEqual(95);
        expect(weapon.isHit).toEqual(true);
        

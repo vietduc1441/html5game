@@ -38,11 +38,16 @@ Bullet.prototype.render=function(ctx){
             ctx.rotate(this.angle);
             ctx.translate(this.x+50,this.y);
             ctx.beginPath();
-                ctx.moveTo(0,2);
-                ctx.lineTo(2,4);
-                ctx.lineTo(4,-2);
+                ctx.moveTo(0,1);
+                ctx.lineTo(10,1);
+                ctx.lineTo(10,-1);
+                ctx.lineTo(0,-1);
             ctx.closePath();
-            ctx.fillStyle="#FF8000";
+            ctx.fillStyle="#DF0101";
+            ctx.shadowBlur = 5; 
+            ctx.shadowColor = "#DF0101";
+
+
             ctx.fill();
         ctx.restore();
     }
