@@ -1,4 +1,4 @@
-html5game
+Battle of Artillery
 =========
-
-an html 5 based on canvas
+An html 5 based on canvas
+inspired by: chicken invader and star war and battlefield
