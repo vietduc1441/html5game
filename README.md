@@ -3,6 +3,7 @@ Battle of Artillery
 An html 5 based on canvas
 
 Inspired by: chicken invader and star war and battlefield
+Testing tool: automatic test with karma and jasmine
 
 Url to play:
 https://dl.dropboxusercontent.com/u/2062352/BattleOfArtillery/public_html/index.html
