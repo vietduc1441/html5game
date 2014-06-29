@@ -58,7 +58,7 @@ Game.prototype.registerKey=function(){
       self.keyPressList[e.keyCode] = false;
    };
 }
-Game.prototype.registerMouse=function(){
+Game.prototype.registerMouse=function(){    
     document.addEventListener("mousemove",this.updateMousePosition.bind(this),false);
     document.addEventListener("mousedown",this.updateMouseDownClick.bind(this),false);
     document.addEventListener("mouseup",this.updateMouseUpClick.bind(this),false);
