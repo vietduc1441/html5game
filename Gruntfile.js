@@ -8,6 +8,11 @@ module.exports = function(grunt) {
 		mangle: true
       },
       my_target: {
+		  options: {
+			beautify: false,
+			sourceMap: true,
+			sourceMapName: 'public_html/js/sourcemap.map'
+		  },
         files:{
 			'public_html/js/html5game.js':['public_html/js/enum.js', 
 											'public_html/js/util.js',
