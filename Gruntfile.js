@@ -60,6 +60,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');//watch task
 	// Default task(s).
   grunt.registerTask('default', ['watch']);
-
+  grunt.registerTask('compress', ['uglify']);
+  grunt.registerTask('test',['jasmine']);
 };
 //http://badwing.com/my-gruntfile-js-an-example-gruntfile-and-my-workflow/
