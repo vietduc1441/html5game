@@ -13,4 +13,3 @@ describe("test bullet",function(){
         expect(absPos.y).toEqual(100+10*Math.sin(Math.PI/4));
     })
 })
-//http://www.elasticsearch.com/about/
