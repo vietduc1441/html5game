@@ -29,26 +29,36 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-		mangle: true
+		mangle: false
       },
-      dev: {
-		options: {
-			beautify: false,
-			sourceMap: true,
-			sourceMapName: 'public_html/js/dis/sourcemap.map'
-		  },
+      dev: {//dynamically uglify all files
+        files:[{
+            expand: true,
+            cwd: 'public_html/js/src',
+            src: ['*.js'],//only this is relative to cwd
+            dest: 'public_html/js/dis/',
+            ext: '.min.js',
+            extDot: 'first'
+		}]//need to be array here
+      },
+      dev_stable: {
+        options: {
+                beautify: false,
+                sourceMap: true,
+                sourceMapName: 'public_html/js/dis/sourcemap.map'
+          },
         files:{
-			'public_html/js/dis/html5game.js':[
-											'public_html/js/src/enum.js', 
-											'public_html/js/src/util.js',
-											'public_html/js/src/plate.js',
-											'public_html/js/src/bullet.js',
-											'public_html/js/src/gunner.js',
-											'public_html/js/src/weaponFactory.js',
-											'public_html/js/src/player.js',
-											'public_html/js/src/game.js',
-											'public_html/js/src/main.js'
-											]
+            'public_html/js/dis/html5game.js':[
+                                            'public_html/js/src/enum.js', 
+                                            'public_html/js/src/util.js',
+                                            'public_html/js/src/plate.js',
+                                            'public_html/js/src/bullet.js',
+                                            'public_html/js/src/gunner.js',
+                                            'public_html/js/src/weaponFactory.js',
+                                            'public_html/js/src/player.js',
+                                            'public_html/js/src/game.js',
+                                            'public_html/js/src/main.js'
+                                            ]
 		}
       }
     }
@@ -61,6 +71,6 @@ module.exports = function(grunt) {
 	// Default task(s).
   grunt.registerTask('default', ['watch']);
   grunt.registerTask('compress', ['uglify']);
+  grunt.registerTask('compress_stable', ['uglify:dev_stable']);
   grunt.registerTask('test',['jasmine']);
 };
-//http://badwing.com/my-gruntfile-js-an-example-gruntfile-and-my-workflow/
