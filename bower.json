@@ -3,10 +3,6 @@
   "version": "0.0.0",
   "description": "first game",
   "main": "public_html/index.html",
-  "moduleType": [
-    "amd",
-    "globals"
-  ],
   "authors": [
     "duc"
   ],
@@ -21,7 +17,7 @@
     "public_html/lib"
   ],
   "dependencies": {
-    "angular": "1.2.16",
-    "underscore": "~1.6.0"
-  }
+    "requirejs": "~2.1.14"
+  },
+  "homepage": "https://github.com/vietduc1441/html5game"
 }
