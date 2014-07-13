@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 //                        waitSeconds:0,
                         baseUrl: 'public_html/js',
                         paths: {
-                            source: 'source',
+                            source: 'dis',
                             lib: '../lib'
                         }
                     }
@@ -76,7 +76,7 @@ module.exports = function(grunt) {
             cwd: 'public_html/js/source',
             src: ['*.js'],//only this is relative to cwd
             dest: 'public_html/js/dis/',
-            ext: '.min.js',
+//            ext: '.min.js',
             extDot: 'first'
 		}]//need to be array here
       },

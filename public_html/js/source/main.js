@@ -1,7 +1,7 @@
 requirejs.config({    
     baseUrl: 'js',
     paths: {
-        source: 'source',
+        source: 'dis',
         lib: '../lib'
     }
 });
