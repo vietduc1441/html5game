@@ -17,7 +17,8 @@
     "public_html/lib"
   ],
   "dependencies": {
-    "requirejs": "~2.1.14"
+    "requirejs": "~2.1.14",
+    "requirejs-domready": "~2.0.1"
   },
   "homepage": "https://github.com/vietduc1441/html5game"
 }
