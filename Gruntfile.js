@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 //                        waitSeconds:0,
                         baseUrl: 'public_html/js',
                         paths: {
-                            source: 'dis',
+                            source: 'source',
                             lib: '../lib'
                         }
                     }
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
         },
         product:{
                 files:['public_html/js/source/*.js'],
-                tasks:['uglify']
+                tasks:['uglify:dev']
         }
     },
     connect: {
@@ -112,7 +112,7 @@ module.exports = function(grunt) {
   
 	// Default task(s).
        
-  grunt.registerTask('default', ['watch']);//watch, if change, test
+  grunt.registerTask('default', ['watch:product']);//watch, if change, test
   grunt.registerTask('compress', ['uglify']);//dynamic uglify
   grunt.registerTask('compress_stable', ['uglify:dev_stable']);//static
   grunt.registerTask('test',['jasmine']);//test

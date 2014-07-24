@@ -1,4 +1,4 @@
-require(["source/Gunner","source/enum","source/player","source/weaponFactory"],function(Gunner,ENUM,Player,WeaponFactory){
+require(["source/gunner","source/enum","source/player","source/weaponFactory"],function(Gunner,ENUM,Player,WeaponFactory){
     describe("Gunner", function(){
         var gunner=null;
         var player=null;

@@ -19,7 +19,11 @@
     "grunt-template-jasmine-requirejs": "~0.1.10",
     "grunt-contrib-connect": "~0.8.0",
     "load-grunt-tasks": "~0.6.0",
-    "karma": "~0.12.17"
+    "karma": "~0.12.17",
+    "karma-jasmine": "~0.1.5",
+    "requirejs": "~2.1.14",
+    "karma-requirejs": "~0.2.2",
+    "karma-chrome-launcher": "~0.1.4"
   },
   "dependencies": {
     "grunt": "~0.4.5"

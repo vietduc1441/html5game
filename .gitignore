@@ -1,2 +1,4 @@
-nbproject/**/* 
-node_modules/**/* 
+nbproject
+node_modules
+.grunt
+public_html/js/dis/
