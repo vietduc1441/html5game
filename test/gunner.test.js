@@ -35,13 +35,13 @@ require(["source/gunner","source/enum","source/player","source/weaponFactory"],f
            expect(gunner.shootWeapon).toHaveBeenCalled();
        })
        it("check collision with player",function(){
-           gunner.update({mouseX:120,mouseY:120});
-           var bullet=gunner.bullets[0];
+           gunner.update({mouseX:120,mouseY:120,mouseDown:true});//user fires
+           var bullet=gunner.bullets[0];//first bullet
            bullet.update(100,110,-Math.PI/2);//init
            bullet.update();//increate x
-           var absPosBullet=bullet.calAbsPosition();
+           bullet.calAbsPosition();
            var weapon=player.weapons[0];
-           var hitTarget=gunner.shootWeapon(weapon);
+           gunner.shootWeapon(weapon);
            expect(weapon.blood).toEqual(95);
            expect(weapon.isHit).toEqual(true);
 

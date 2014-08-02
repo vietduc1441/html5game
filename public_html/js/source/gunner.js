@@ -2,12 +2,12 @@ define(["source/weaponFactory","source/enum","source/util"],
     function(WeaponFactory,ENUM,Util){
         var Gunner=function(initX,initY,gunX,gunY){
             this.bullets=[];
-            this.x=initX;//mouse pos
-            this.y=initY;//mouse pos
+            this.x=initX;//mouse pos <=> sight pos x
+            this.y=initY;//mouse pos <=> sight pos y
             this.angle=-Math.PI/2;//mouse angle
-            this.fire=false;
-            this.gunX=gunX;
-            this.gunY=gunY;
+            this.fire=false;//is fired or not
+            this.gunX=gunX;//gunner' X
+            this.gunY=gunY;//gunner' y
 
             this.fillStyle= 'rgba(255,0,0, 0.5)';
             this.strokeStyle='rgb(255,0,0)';
@@ -15,23 +15,31 @@ define(["source/weaponFactory","source/enum","source/util"],
             this.edgeWidth=1;
             this.sightSize=30;
             this.numOfFiredBullets=0;
-        }
+        };
+        /*
+         * add bullets to a gunner
+         * @param {type} type of bullet
+         * @param {type} number
+         * @returns {undefined}
+         */
         Gunner.prototype.addBullets=function (type,number){
             var newbullets=WeaponFactory.makeBullets(type,number);
             var _bullets=this.bullets;
             newbullets.forEach(function (bu){
                 _bullets.push(bu);
-            })
-        }
+            });
+        };
         /*
          * Start with 1000 bullet Type1
          * @returns {undefined}
          */
         Gunner.prototype.start=function(){
             this.addBullets(ENUM.BULLET.IRON_1,1000);
-        }
+        };
         /*
          * evtInfo: {mouseX,mouseY,rightClick};
+         * Update the postion of the sight according to the pos of
+         * the mouse
          */
         Gunner.prototype.update=function(evtInfo){
             this.x=evtInfo.mouseX;
@@ -56,7 +64,10 @@ define(["source/weaponFactory","source/enum","source/util"],
                 var bullet=this.bullets[i];
                     bullet.update();
             }
-        }
+        };
+        /*
+         * shoot a  player
+         */
         Gunner.prototype.shoot=function shootAPlayer(player){
             var weapons=player.weapons;
             var countHit=0;
@@ -66,9 +77,11 @@ define(["source/weaponFactory","source/enum","source/util"],
             //remove from player
             player.removeDiedWeapons();
             return countHit;
-        }
-
-
+        };
+        /*
+         * Check collision of fired bullets with weapon of the players
+         * which the gunner fires
+         */
         Gunner.prototype.shootWeapon=function(weapon){
             var totalHit=0;
             if (weapon.shape===ENUM.SHAPE_PLATE.ROUND){
@@ -86,7 +99,10 @@ define(["source/weaponFactory","source/enum","source/util"],
                 }
             }
             return totalHit;
-        }
+        };
+        /*
+         * --------------------Render-----------------------------------
+         */
         Gunner.prototype.renderSight=function(ctx){
             ctx.save();
                 ctx.translate(this.x,this.y);
@@ -99,7 +115,7 @@ define(["source/weaponFactory","source/enum","source/util"],
                 ctx.stroke();
                 ctx.closePath();
             ctx.restore();
-        }
+        };
         Gunner.prototype.renderTarget=function(ctx){
             ctx.save();
                 ctx.translate(this.x,this.y);
@@ -112,7 +128,7 @@ define(["source/weaponFactory","source/enum","source/util"],
                 ctx.strokeStyle=this.sightStyle;
                 ctx.stroke();
             ctx.restore(); 
-        }
+        };
         Gunner.prototype.calAngleToTarget=function(x1,y1,x2,y2){
             var tg=(y2-y1)/(x2-x1);
             var angle= Math.atan(tg);
@@ -120,7 +136,7 @@ define(["source/weaponFactory","source/enum","source/util"],
                 angle=Math.PI+angle;
             }
             return angle;
-        }
+        };
         Gunner.prototype.renderBody=function(ctx){
             ctx.save();
                 ctx.translate(this.gunX,this.gunY);
@@ -143,7 +159,7 @@ define(["source/weaponFactory","source/enum","source/util"],
 
                 ctx.closePath();
             ctx.restore();
-        }
+        };
         Gunner.prototype.renderBase=function(ctx){
             ctx.save();
                 ctx.translate(this.gunX, this.gunY);
@@ -156,23 +172,23 @@ define(["source/weaponFactory","source/enum","source/util"],
                 ctx.stroke();
                 ctx.closePath();
             ctx.restore();
-        }
+        };
         Gunner.prototype.renderGun=function(ctx){
             this.renderBase(ctx);
             this.renderBody(ctx);
-        }
+        };
         Gunner.prototype.renderBullets=function(ctx){
             this.bullets.forEach(function(bullet){
                 bullet.render(ctx);
             });
-        }
+        };
         Gunner.prototype.render=function(ctx){
 
             this.renderGun(ctx);
             this.renderSight(ctx);
             this.renderTarget(ctx);
             this.renderBullets(ctx);
-        }
+        };
        return Gunner;
     }
-)
+);

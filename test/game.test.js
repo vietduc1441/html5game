@@ -23,9 +23,9 @@ require(["source/game","source/enum"],function(Game,ENUM){
                 spyOn(gunner,"update");
             });
         });
-//        it("context obj is not null",function(){
-//            expect(game.ctx).not.toBe(null);
-//        });
+        it("context obj is not null",function(){
+            expect(game.ctx).not.toBe(null);
+        });
         it("could start and have 1 player", function(){
 //            expect(game).not.toBe(null);
             expect(game.players.length).toBeGreaterThan(0);
