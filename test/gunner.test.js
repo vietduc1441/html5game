@@ -14,10 +14,10 @@ require(["source/gunner","source/enum","source/player","source/weaponFactory"],f
            player.weapons.push(plate1);
            player.weapons.push(plate2);
 
-       }) 
+       }); 
        it("has bullets",function(){
            expect(gunner.bullets.length).toBeGreaterThan(0);
-       })
+       });
        it("when fire, increate the numberOfFiredBullets",function(){
            gunner.numOfFiredBullets=0;
            gunner.update({mouseX:10,mouseY:10,mouseDown:true});
@@ -28,12 +28,17 @@ require(["source/gunner","source/enum","source/player","source/weaponFactory"],f
            expect(gunner.bullets[1].isFired).toEqual(false);
            expect(gunner.bullets[1].x).toEqual(0);
            expect(gunner.bullets[1].y).toEqual(0);
-       })
+       });
+       it("fires, causing player is alerted",function(){
+               gunner.fire = true;
+               gunner.shoot(player);
+                expect(player.isShot).toEqual(true);
+        });
        it("shoot will cause shootWeapon",function(){
            spyOn(gunner,"shootWeapon");
            gunner.shoot(player);
            expect(gunner.shootWeapon).toHaveBeenCalled();
-       })
+       });
        it("check collision with player",function(){
            gunner.update({mouseX:120,mouseY:120,mouseDown:true});//user fires
            var bullet=gunner.bullets[0];//first bullet
@@ -53,7 +58,7 @@ require(["source/gunner","source/enum","source/player","source/weaponFactory"],f
            expect(angle).toEqual(-Math.PI/4);
            var angle=gunner.calAngleToTarget(0,0,-100,-100);
            expect(angle).toEqual(Math.PI+Math.PI/4);
-       })
+       });
     });
 
-})
+});

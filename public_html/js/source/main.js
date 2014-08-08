@@ -1,7 +1,7 @@
 requirejs.config({    
     baseUrl: 'js',
     paths: {
-        source: 'dis',
+        source: 'source',
         lib: '../lib'
     }
 });
@@ -14,4 +14,4 @@ require(["lib/requirejs-domready/domReady"],function(domReady){
             game.start();
             game.run();
     }
-})
+});

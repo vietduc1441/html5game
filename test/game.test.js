@@ -27,7 +27,7 @@ require(["source/game","source/enum"],function(Game,ENUM){
             expect(game.ctx).not.toBe(null);
         });
         it("could start and have 1 player", function(){
-//            expect(game).not.toBe(null);
+            expect(game).not.toBe(null);
             expect(game.players.length).toBeGreaterThan(0);
         });
         it("could start and have 1 gunner", function(){
@@ -57,5 +57,10 @@ require(["source/game","source/enum"],function(Game,ENUM){
             game.checkCollision();
             expect(game.gunners[0].shoot).toHaveBeenCalled();
         });
+        it("started, players know the gunners",function(){
+            var player=game.players[0];
+            expect(player.trackedGunners.length).toBeGreaterThan(0);
+        });
+
     });
 });

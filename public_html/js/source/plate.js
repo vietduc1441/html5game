@@ -1,5 +1,5 @@
-define(["require","source/enum","source/weaponFactory"],
-    function(require,ENUM,WeaponFactory){
+define(["require","source/enum","source/weaponFactory","source/util"],
+    function(require,ENUM,WeaponFactory,Util){
         var Plate= function(shape,size){
             this.shape=shape;
             this.x=0;
@@ -18,7 +18,9 @@ define(["require","source/enum","source/weaponFactory"],
             this.blood=100;
             this.isDied=false;
             this.isHit=false;
-            this.bullets=require("source/weaponFactory").makeBullets(ENUM.BULLET.LAZER,100000);
+            this.bullets=require("source/weaponFactory").makeBullets(ENUM.BULLET.IRON_2,100000);
+            this.numOfFiredBullets=0;
+            this.isShot=false;
         };
         Plate.prototype.setPosition=function(x,y){
             this.x=x;
@@ -31,10 +33,32 @@ define(["require","source/enum","source/weaponFactory"],
                 this.isDied=true;
             }
         };
-        Plate.prototype.update=function(){
+        
+        Plate.prototype.fireGunner=function(gunner){            
+            var firingBullet=this.bullets[this.numOfFiredBullets];
+            var angleToGunner=Util.calAngle(this.x,this.y,gunner.gunX,gunner.gunY);
+            firingBullet.update(this.x,this.y,angleToGunner);//set started position
+            this.numOfFiredBullets++;
+        };
+        
+        Plate.prototype.fire=function(gunners){
+            for (var i=0, gunner=gunners[i]; i<gunners.length; i++){
+                this.fireGunner(gunner);
+            }
+        };
+        
+        Plate.prototype.update=function(gunnersToKill){
             this.x+=this.dx;
             this.y+=this.dy;
             this.isHit=this.isHit&&!this.isHit;
+            //update bullets            
+            if (gunnersToKill){
+                this.fire(gunnersToKill); //fire if play tell
+            }
+            for (var  i=0; i<this.numOfFiredBullets; i++){
+                var bullet=this.bullets[i];
+                bullet.update(); //just go forward
+            }
         };
         Plate.prototype.render=function(ctx){
             if (this.isHit) {
@@ -43,6 +67,13 @@ define(["require","source/enum","source/weaponFactory"],
             else{
                 this.renderBody(ctx);
                 this.renderGun(ctx);
+            }
+            this.renderBullets(ctx);
+        };
+        Plate.prototype.renderBullets=function(ctx){
+            
+            for (var i=0; i<this.numOfFiredBullets; i++){
+                this.bullets[i].render(ctx);
             }
         };
         Plate.prototype.renderHitedPlate=function(ctx){

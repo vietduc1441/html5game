@@ -3,6 +3,8 @@ define(["source/weaponFactory","source/enum"],function(WeaponFactory,ENUM){
         this.name=name;
         this.role=role;
         this.weapons=[];
+        this.trackedGunners=[];
+        this.isShot=false;
     };
     Player.prototype.start=function(){
         var plates=WeaponFactory.makePlates(10,ENUM.SHAPE_PLATE.ROUND,15);
@@ -19,25 +21,35 @@ define(["source/weaponFactory","source/enum"],function(WeaponFactory,ENUM){
             _weapons.push(item);    
         });    
     };
-    Player.prototype.connect=function(){
-
-    }
+    Player.prototype.fireGunners=function(){
+        if (this.isShot){
+            this.weapons.forEach(function(weapon){
+                    weapon.update(this.trackedGunners);//tell all weapon to fire back
+                },this);
+        }
+    };
+    /*
+     * the player get inform about the gunners
+     */
+    Player.prototype.trackGunners=function(gunners){
+        this.trackedGunners=gunners;
+    };
     Player.prototype.update=function(){
         this.weapons.forEach(function(weapon){
             weapon.update();
-        },this)
-    }
+        },this);
+    };
     Player.prototype.render= function(ctx){
         this.weapons.forEach(function(weapon){
             weapon.render(ctx);        
-        })
-    }
+        });
+    };
     Player.prototype.removeDiedWeapons=function(){
         var weapons=this.weapons;    
         for (var i=weapons.length-1; i>=0; i--){
             var weapon=weapons[i];
             if (weapon.isDied) weapons.splice(i,1);
         }
-    }
+    };
     return Player;
-})
+});

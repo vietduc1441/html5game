@@ -1,4 +1,4 @@
-define(function(){
+define(["source/enum"],function(Enum){
     var Bullet= function(type){
         this.strength=1;
         this.type=type;
@@ -44,11 +44,17 @@ define(function(){
                     ctx.lineTo(10,-1);
                     ctx.lineTo(0,-1);
                 ctx.closePath();
-                ctx.fillStyle="#DF0101";
-                ctx.shadowBlur = 5; 
-                ctx.shadowColor = "#DF0101";
-
-
+                switch (this.type){
+                    case  Enum.BULLET.IRON_1:
+                        ctx.fillStyle="#DF0101";
+                        ctx.shadowColor = "#DF0101";
+                        break;
+                    case Enum.BULLET.IRON_2:
+                        ctx.fillStyle="#01DF3A";
+                        ctx.shadowColor = "#01DF3A";
+                        break;                        
+                }
+            ctx.shadowBlur = 5; 
                 ctx.fill();
             ctx.restore();
         }

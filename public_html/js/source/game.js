@@ -13,7 +13,7 @@ var Game= function(){
         };
     this.mouseX=this.background.width/2;
     this.mouseY=this.background.height/2;
-    this.laserSound=null
+    this.laserSound=null;
 };
 Game.prototype.loadSound=function(){
     var laserSound;
@@ -21,44 +21,44 @@ Game.prototype.loadSound=function(){
     document.body.appendChild(laserSound);
     laserSound.setAttribute("src", "sound/laser.mp3");
     this.laserSound=laserSound;
-}
+};
 Game.prototype.addPlayer= function(name){
     var newPlayer= new Player(name);
     this.players.push(newPlayer);
     return newPlayer;
-}
+};
 Game.prototype.addGunner= function(name){
     var newGunner= new Gunner(this.background.width/2,this.background.height/2,
                                 this.background.width/2,this.background.height);
     this.gunners.push(newGunner);
     return newGunner;
-}
+};
 Game.prototype.drawBackground=function(){
     this.ctx.fillStyle = this.background.color;
     this.ctx.fillRect(0, 0, this.background.width, this.background.height);
     this.drawBorder();
-}
+};
 Game.prototype.drawBorder=function(){
     this.ctx.strokeStyle="#FF0000";
     this.ctx.strokeRect(1,1,this.background.width-1,this.background.height-1);
-}
+};
 Game.prototype.getContext=function(){
     this.theCanvas=document.getElementById("game");
     this.ctx= this.theCanvas.getContext("2d");
     this.ctx.height=this.theCanvas.height;
     this.ctx.width=this.theCanvas.width;
-}
+};
 Game.prototype.registerKey=function(){
     var self=this;
     document.onkeydown = function(e){
       e=e?e:window.event;
       self.keyPressList[e.keyCode] = true;
-   }
+   };
    document.onkeyup = function(e){
       e = e?e:window.event;
       self.keyPressList[e.keyCode] = false;
    };
-}
+};
 Game.prototype.registerMouse=function(){  
     document.addEventListener("mousemove",this.updateMousePosition.bind(this),false);
     document.addEventListener("mousedown",this.updateMouseDownClick.bind(this),false);
@@ -67,10 +67,10 @@ Game.prototype.registerMouse=function(){
 
 Game.prototype.updateMouseUpClick=function(evt){
     this.isMouseDown=false;
-}
+};
 Game.prototype.updateMouseDownClick=function(evt){
     this.isMouseDown=true;
-}
+};
 Game.prototype.updateMousePosition=function(evt){
     var rect = this.theCanvas.getBoundingClientRect();
     this.mouseX= evt.clientX - rect.left;
@@ -78,6 +78,7 @@ Game.prototype.updateMousePosition=function(evt){
     if (this.mouseY>this.background.height) this.mouseY=this.background.height;
     if (this.mouseX>this.background.width) this.mouseX=this.background.width;
 };
+
 Game.prototype.start= function(){
     this.loadSound();
     this.getContext();
@@ -86,18 +87,20 @@ Game.prototype.start= function(){
     var newPlayer=this.addPlayer("player1");
     var newGunner=this.addGunner("gunner1");
     newPlayer.start();
+    newPlayer.trackGunners([newGunner]);
     newGunner.start();
     this.switchGameState(ENUM.GAME_STATE.INIT);    
 };
 Game.prototype.update=function(){
-    this.players.forEach(function(player){
-        player.update();
-    });
-    this.gunners.forEach(function(gunner){
-        var evtInf={mouseX:this.mouseX,mouseY:this.mouseY,
+    var evtInf={mouseX:this.mouseX,mouseY:this.mouseY,
                         mouseDown:this.isMouseDown||this.keyPressList['13']
                         ,leftKey:this.keyPressList['37']||this.keyPressList['65']
                         ,rightKey:this.keyPressList['39']||this.keyPressList['68']};
+        
+    this.players.forEach(function(player){
+        player.update(evtInf);
+    });
+    this.gunners.forEach(function(gunner){
         gunner.update(evtInf);
         if (evtInf.mouseDown) this.laserSound.play();
 
@@ -115,12 +118,18 @@ Game.prototype.render=function(){
         gunner.render(_ctx);
     });
 };
+/*
+ * check collision will be called after all entities get updated
+ */
 Game.prototype.checkCollision=function(){
     this.gunners.forEach(function(gunner){
         this.players.forEach(function(player){
             gunner.shoot(player);
         },this);
     },this);
+    this.players.forEach(function(player){
+        player.fireGunners();
+    });
 };
 Game.prototype.switchGameState=function(newState){
     this.currentGameState=newState;
@@ -143,7 +152,7 @@ Game.prototype.levelUp=function(){
         });
     });
     this.switchGameState(ENUM.GAME_STATE.PLAY);
-}
+};
 Game.prototype.drawTitle=function(){
     var ctx=this.ctx;
     ctx.save();
@@ -151,7 +160,7 @@ Game.prototype.drawTitle=function(){
     ctx.fillStyle="white";
     ctx.fillText("Press space to start game!",this.background.height/2,this.background.width/2);
     ctx.restore();
-}
+};
 Game.prototype.initGame=function(){
     this.drawBackground();
     this.render();
@@ -174,7 +183,7 @@ Game.prototype.run=function(){
     window.requestAnimationFrame(this.run.bind(this));
 };
 return Game;
-})
+});
 
 if (!Function.prototype.bind) {
   Function.prototype.bind = function (oThis) {

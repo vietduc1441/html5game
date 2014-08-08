@@ -9,6 +9,8 @@ define(["source/weaponFactory","source/enum","source/util"],
             this.gunX=gunX;//gunner' X
             this.gunY=gunY;//gunner' y
 
+            this.isHit=false;
+            
             this.fillStyle= 'rgba(255,0,0, 0.5)';
             this.strokeStyle='rgb(255,0,0)';
             this.sightStyle='#FFFFFF';
@@ -75,7 +77,8 @@ define(["source/weaponFactory","source/enum","source/util"],
                 countHit+=this.shootWeapon(weapon);
             },this);
             //remove from player
-            player.removeDiedWeapons();
+            player.removeDiedWeapons();//TODO:
+            player.isShot=this.fire;
             return countHit;
         };
         /*
@@ -129,17 +132,10 @@ define(["source/weaponFactory","source/enum","source/util"],
                 ctx.stroke();
             ctx.restore(); 
         };
-        Gunner.prototype.calAngleToTarget=function(x1,y1,x2,y2){
-            var tg=(y2-y1)/(x2-x1);
-            var angle= Math.atan(tg);
-            if ((y2<y1)&&(x2<x1)){
-                angle=Math.PI+angle;
-            }
-            return angle;
-        };
+        Gunner.prototype.calAngleToTarget=Util.calAngle;
         Gunner.prototype.renderBody=function(ctx){
             ctx.save();
-                ctx.translate(this.gunX,this.gunY);
+                ctx.translate(this.gunX, this.gunY);
                 ctx.rotate(this.angle);
                 ctx.beginPath();
                 //the lower part
@@ -178,12 +174,12 @@ define(["source/weaponFactory","source/enum","source/util"],
             this.renderBody(ctx);
         };
         Gunner.prototype.renderBullets=function(ctx){
+            //TODO: if out of screen, dont render
             this.bullets.forEach(function(bullet){
                 bullet.render(ctx);
             });
         };
         Gunner.prototype.render=function(ctx){
-
             this.renderGun(ctx);
             this.renderSight(ctx);
             this.renderTarget(ctx);
