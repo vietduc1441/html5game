@@ -1,5 +1,6 @@
-Battle of Artillery
-=========
+1. Introduction
+=================
+
 A cool html 5 game based on canvas
 
 Inspired by: chicken invader and star war and battlefield
@@ -14,3 +15,13 @@ To learn more about the structure to design and program a game, i don't use any 
 Great course: https://www.open2study.com/courses/concepts-in-game-development
 
 TODO: update so it works with mobile smoothly
+
+
+
+2. Gameplay
+==================
+3. HTML5 Canvas
+==================
+sfasfasf
+4. NOTE
+===================
