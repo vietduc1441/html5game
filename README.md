@@ -1,27 +1,22 @@
 1. Introduction
 =================
 
-A cool html 5 game based on canvas
-
-Inspired by: chicken invader and star war and battlefield
-
-Testing tool: automatic test with karma and jasmine
-
-Url to play:
-https://dl.dropboxusercontent.com/u/2062352/BattleOfArtillery/public_html/index.html
+This is my first game realized by Html5's canvas. The idea of the game is collected from chicken invader, star war and battlefield.
 
 
-To learn more about the structure to design and program a game, i don't use any library here.
-Great course: https://www.open2study.com/courses/concepts-in-game-development
+* Testing tool: karma and jasmine.
+* Building tool: grunt.
+* Url to play: https://dl.dropboxusercontent.com/u/2062352/BattleOfArtillery/public_html/index.html.
 
-TODO: update so it works with mobile smoothly
-
+My propose when creating this is to  learn more about the structure to design and program a game. As a result, I don't use any library here.
 
 
 2. Gameplay
 ==================
+
 3. HTML5 Canvas
 ==================
 sfasfasf
 4. NOTE
 ===================
+Great course: https://www.open2study.com/courses/concepts-in-game-development
