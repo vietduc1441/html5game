@@ -1,0 +1,1 @@
+define([],function(){return{calDistance:function(t,n,r,i){return Math.sqrt((t-r)*(t-r)+(n-i)*(n-i))},calAngle:function(e,t,n,r){var i=(r-t)/(n-e),s=Math.atan(i);return r<t&&n<e&&(s=Math.PI+s),s}}});
